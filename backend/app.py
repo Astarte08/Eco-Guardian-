@@ -61,3 +61,43 @@ def get_predictions():
                 "chart": [45, 50, 55, 48, 52]
             }
         }), 200
+        
+@app.route('/api/suggestions', methods=['POST'])
+def get_suggestions():
+    try:
+        data = request.get_json()
+        transport = data.get('transport', '')
+        diet = data.get('diet', '')
+
+        # Simple rule-based suggestions (replace with OpenAI if desired)
+        suggestions = []
+        if transport == 'car':
+            suggestions.append("Try carpooling or using public transport twice a week.")
+            suggestions.append("Consider switching to an electric vehicle.")
+        elif transport == 'electric':
+            suggestions.append("Charge your vehicle during off-peak hours.")
+            suggestions.append("Use renewable energy sources if possible.")
+        elif transport == 'public':
+            suggestions.append("Combine trips to reduce frequency.")
+            suggestions.append("Walk or bike for short distances.")
+        elif transport == 'bike':
+            suggestions.append("Maintain your bike regularly for efficiency.")
+            suggestions.append("Encourage others to bike or walk.")
+
+        if diet == 'meat-heavy':
+            suggestions.append("Try 'Meatless Mondays' to reduce your carbon footprint.")
+            suggestions.append("Incorporate more plant-based meals.")
+        elif diet == 'balanced':
+            suggestions.append("Increase your intake of plant-based foods.")
+        elif diet == 'vegetarian':
+            suggestions.append("Explore vegan options for even lower impact.")
+        elif diet == 'vegan':
+            suggestions.append("Great job! Consider sharing your recipes with friends.")
+
+        if not suggestions:
+            suggestions.append("You're already making eco-friendly choices!")
+
+        return jsonify({"suggestions": suggestions})
+    except Exception as e:
+        print(f"Suggestions API Error: {str(e)}")
+        return jsonify({"suggestions": ["Could not generate suggestions at this time."]}), 200        
