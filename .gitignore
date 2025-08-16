@@ -118,6 +118,14 @@ web_modules/
 .env.production.local
 .env.local
 
+# Node.gitignore (GitHub default) + .env
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
