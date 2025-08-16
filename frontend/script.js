@@ -225,14 +225,26 @@ function initGauges() {
     window.waterGauge.set(72);
 }
 async function loadPollutionData() {
-  // Hardcoded demo data
-  const demoData = {
-    aqi: [62, 65, 68, 64, 63],  // 5-day AQI forecast
-    water: "Good quality - 6.8pH (Low contaminant levels)",
-    chart: [62, 65, 68, 64, 63] // For the graph
-  };
-  updateDashboard(demoData);
+  try {
+    const res = await fetch("https://eco-guardian.onrender.com/api/predictions", {
+      method: "POST"
+    });
+    if (!res.ok) throw new Error("Failed to fetch data from backend");
+    const data = await res.json();
+    updateDashboard(data);
+  } catch (err) {
+    console.error("Error fetching predictions:", err);
+
+    // Fallback to demo data if backend fails
+    const demoData = {
+      aqi: [62, 65, 68, 64, 63],
+      water: "Good quality - 6.8pH (Low contaminant levels)",
+      chart: [62, 65, 68, 64, 63]
+    };
+    updateDashboard(demoData);
+  }
 }
+
 function updateDashboard(data) {
   // Update AQI display
   document.getElementById('aqi-prediction').textContent = 
