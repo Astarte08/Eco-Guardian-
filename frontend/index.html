@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoGuardian | AI Environmental Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <img src="assets/logo.png" alt="EcoGuardian Logo">
+        <h1>EcoGuardian</h1>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Dashboard</a></li>
+          <li><a href="ar.html">Eco Lens (AR)</a></li>
+          <li><a href="#carbon-tracker">Carbon Tracker</a></li>
+        </ul>
+      </nav>
+
+      <button class="theme-toggle" aria-label="toggle theme">🌓</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Real-Time Environmental Intelligence</h2>
+        <p>AI-powered insights to protect our planet</p>
+        <button class="cta-button" id="scan-ar">Scan with Eco Lens</button>
+      </div>
+      <div class="hero-visual">
+        <div id="earth-globe" aria-hidden="true" style="width:100%;height:320px;"></div>
+      </div>
+    </section>
+
+    <section class="dashboard">
+      <div class="map-container">
+        <h3><span class="icon">🌎</span> Global Air Quality</h3>
+        <div id="pollution-map" style="height:360px;"></div>
+
+        <div class="map-legend">
+          <div class="legend-item good">0-50 Good</div>
+          <div class="legend-item moderate">51-100 Moderate</div>
+          <div class="legend-item unhealthy">101-150 Unhealthy</div>
+          <div class="legend-item very-unhealthy">151-200 Very Unhealthy</div>
+          <div class="legend-item hazardous">201+ Hazardous</div>
+        </div>
+      </div>
+
+      <div class="card air-quality">
+        <h4><span class="icon">💨</span> Air Quality Index</h4>
+        <div class="gauge" id="aqi-gauge" style="width:100%;height:120px;"></div>
+        <div class="prediction" id="aqi-prediction">Loading prediction...</div>
+      </div>
+
+      <div class="card water-quality">
+        <h4><span class="icon">💧</span> Water Purity</h4>
+        <div class="gauge" id="water-gauge" style="width:100%;height:120px;"></div>
+        <div class="prediction" id="water-prediction">Loading prediction...</div>
+      </div>
+
+      <div class="card carbon-tracker" id="carbon-tracker">
+        <h4><span class="icon">👣</span> Carbon Footprint</h4>
+        <form id="carbon-form">
+          <div class="form-group">
+            <label for="transport">Daily Transport:</label>
+            <select id="transport" required>
+              <option value="">Select...</option>
+              <option value="car">Car (Gasoline)</option>
+              <option value="electric">Electric Vehicle</option>
+              <option value="public">Public Transport</option>
+              <option value="bike">Bike/Walk</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="diet">Primary Diet:</label>
+            <select id="diet" required>
+              <option value="">Select...</option>
+              <option value="meat-heavy">Meat Heavy</option>
+              <option value="balanced">Balanced</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="vegan">Vegan</option>
+            </select>
+          </div>
+
+          <button type="submit">Calculate Footprint</button>
+        </form>
+
+        <div id="carbon-result" aria-live="polite"></div>
+        <div id="ai-suggestions"></div>
+      </div>
+    </section>
+
+    <section class="predictions">
+      <h3><span class="icon">🔮</span> AI Pollution Forecast</h3>
+      <div class="prediction-chart">
+      <canvas id="prediction-canvas" width="800" height="240"></canvas>
+      </div>
+      <div class="alerts" id="alerts-container"></div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 EcoGuardian | AI for a Better Planet</p>
+    <p>Data sources: OpenAQ, NOAA, WHO</p>
+  </footer>
+
+  <!-- libs -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three-globe@2.24.7/dist/three-globe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
