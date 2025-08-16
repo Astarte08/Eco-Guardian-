@@ -279,25 +279,30 @@ document.getElementById('carbon-form').addEventListener('submit', async function
     `;
 
     // Fetch AI suggestions
-try {
-        const res = await fetch('http://localhost:5000/api/suggestions', {
+    try {
+        const res = await fetch('/api/suggestions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ transport, diet })
         });
+        
+        if (!res.ok) throw new Error('API request failed');
+        
         const data = await res.json();
-        if (data.suggestions && Array.isArray(data.suggestions)) {
+        if (data.suggestions) {
             suggestionsDiv.innerHTML = `
                 <h5>AI Suggestions</h5>
                 <ul>${data.suggestions.map(s => `<li>${s}</li>`).join('')}</ul>
             `;
         } else {
-            suggestionsDiv.textContent = "Could not load suggestions. Please try again later.";
+            suggestionsDiv.textContent = "No suggestions available.";
         }
     } catch (err) {
+        console.error('Failed to fetch suggestions:', err);
         suggestionsDiv.textContent = "Could not load suggestions. Please try again later.";
     }
-}); 
+});
+
 function updateChart(chartData) {
     const ctx = document.getElementById('prediction-canvas').getContext('2d');
     if (window.predictionChart) {
